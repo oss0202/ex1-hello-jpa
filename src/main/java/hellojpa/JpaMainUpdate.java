@@ -10,21 +10,22 @@ public class JpaMainUpdate {
         
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("hello");
         
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager em = entityManagerFactory.createEntityManager();
 
-        EntityTransaction tx = entityManager.getTransaction();
+        EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-            Member member = new Member();
-            member.setId(3L);
-            member.setName("HelloC");
+            Member findMember = em.find(Member.class, 1L);
+            System.out.println("findMember = " + findMember.getId());
+            System.out.println("findMember = " + findMember.getName());
+            // 별도로 persist 메서드를 호출해서 저장할 필요가 없다.
+            findMember.setName("HelloJPA");
 
-            entityManager.persist(member);
             tx.commit();
         }catch (Exception e){
             tx.rollback();
         }finally {
-            entityManager.close();
+            em.close();
         }
 
         entityManagerFactory.close();;
