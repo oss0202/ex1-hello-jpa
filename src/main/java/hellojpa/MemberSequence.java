@@ -6,7 +6,7 @@ import javax.persistence.*;
 @SequenceGenerator(
         name = "MEMBER_SEQ_GENERATOR",
         sequenceName = "MEMBER_SEQ", //매핑할 데이터베이스 시퀀스
-        initialValue = 1, allocationSize = 1)
+        initialValue = 1, allocationSize = 50)
 public class MemberSequence {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
