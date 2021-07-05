@@ -18,6 +18,7 @@ public class JpaMainrRelation {
         tx.begin();
         try {
 
+            // 객체를 테이블에 맞추어 데이터 중심으로 모델링 진행
             Team team = new Team();
             team.setName("TeamA");
             em.persist(team);
@@ -28,6 +29,10 @@ public class JpaMainrRelation {
             memberRelation.setTeamId(team.getId());
             em.persist(memberRelation);
 
+            MemberRelation findMember = em.find(MemberRelation.class, memberRelation.getId());
+
+            Long findTeamId = findMember.getTeamId();
+            Team findTeam = em.find(Team.class, findTeamId);
 
             tx.commit();
         }catch (Exception e){
