@@ -17,7 +17,15 @@ public class MemberRelation {
     @Column(name="USERNAME")
     private String userName;
 
+    /*
+     // 객체지향 모델링을 위한 주석 처리
     @Column(name = "TEAM_ID")
     private Long teamId;
+     */
+
+    // 단방향 연관관계
+    @ManyToOne
+    @JoinColumn(name ="TEAM_ID")
+    private Team team;
 
 }

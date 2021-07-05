@@ -1,14 +1,11 @@
 package relationmappingbasic;
 
-import hellojpa.Member;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
-public class JpaMainrRelation {
+public class JpaMainrRelationOneWay {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
@@ -17,8 +14,7 @@ public class JpaMainrRelation {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-/*
-member 테이블 연관관계 설정으로 인한 주서처리 -> 에러발생
+
             // 객체를 테이블에 맞추어 데이터 중심으로 모델링 진행
             Team team = new Team();
             team.setName("TeamA");
@@ -27,14 +23,19 @@ member 테이블 연관관계 설정으로 인한 주서처리 -> 에러발생
             MemberRelation memberRelation = new MemberRelation();
             memberRelation.setUserName("member1");
             // member1 을 Team!에 소속시키고 싶다.
-            memberRelation.setTeamId(team.getId());
+            memberRelation.setTeam(team);
             em.persist(memberRelation);
+
+            //영속성 컨텍스트가 아닌 DB에서 조회해 오고 싶다면 -S
+            em.flush();// 쿼리 실행
+            em.clear();// 영속성 컨텍스트 삭제
+            //영속성 컨텍스트가 아닌 DB에서 조회해 오고 싶다면 -E
 
             MemberRelation findMember = em.find(MemberRelation.class, memberRelation.getId());
 
-            Long findTeamId = findMember.getTeamId();
-            Team findTeam = em.find(Team.class, findTeamId);
-*/
+            Team findTeam = findMember.getTeam();
+            System.out.println("findTeam = " + findTeam.getName());
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
