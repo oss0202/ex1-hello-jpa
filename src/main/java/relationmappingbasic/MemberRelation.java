@@ -25,6 +25,7 @@ public class MemberRelation {
 
     // 단방향 연관관계
     @ManyToOne
+    // Join컬럼으로 사용
     @JoinColumn(name ="TEAM_ID")
     private Team team;
 
