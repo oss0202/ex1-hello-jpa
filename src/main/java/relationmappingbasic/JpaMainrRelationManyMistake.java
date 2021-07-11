@@ -22,13 +22,25 @@ public class JpaMainrRelationManyMistake {
 
             MemberRelation member = new MemberRelation();
             member.setUserName("member1");
-            
-            // 역방향( 주인이 아닝 방향 )만 연관관계 설정
-            team.getMembers().add(member);
+            /* 1. 연관관계의 주인에 값을 입력하지 않음
+             역방향( 주인이 아닝 방향 )만 연관관계 설정*/
+            //team.getMembers().add(member);
 
-            //member.setTeam(team);
-
+            // 2. 올바른 연관관계 설정
+            member.setTeam(team);
             em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            Team findTeam = em.find(Team.class, team.getId());
+            System.out.println("------------------------------------");
+            List<MemberRelation> members = findTeam.getMembers();
+
+            for (MemberRelation memberRelation : members) {
+                System.out.println("m = " + memberRelation.getUserName());
+            }
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
