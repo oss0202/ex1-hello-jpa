@@ -33,4 +33,13 @@ public class MemberRelation {
         this.team = team;
         team.getMembers().add(this);
     }
+
+    @Override
+    public String toString() {
+        return "MemberRelation{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", team=" + team +
+                '}';
+    }
 }
