@@ -28,7 +28,11 @@ public class JpaMainrRelationManyMistake {
             MemberRelation의 setTeam 실행 시
             Team에 있는 Members에도 Team 자동 추가되도록 메서드 생성
              */
-            member.changeTeam(team);
+//            member.changeTeam(team);
+
+
+            //반대로 team에서 생성해도 된다.
+            team.addMember(member);
 //            member.setTeam(team);
 //            team.getMembers().add(member);
 
