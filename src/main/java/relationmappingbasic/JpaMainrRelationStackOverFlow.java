@@ -5,6 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.List;
+import java.util.Optional;
 
 public class JpaMainrRelationStackOverFlow {
     public static void main(String[] args) {
@@ -35,6 +36,12 @@ public class JpaMainrRelationStackOverFlow {
             for (MemberRelation memberRelation : members) {
                 System.out.println("member = " + findTeam);
             }
+
+            // Optional Test
+            Optional<Team> optionalTeam = Optional.of(findTeam);
+            Optional.ofNullable(optionalTeam);
+
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
