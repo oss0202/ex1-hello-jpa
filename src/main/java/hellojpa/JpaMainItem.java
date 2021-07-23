@@ -7,14 +7,32 @@ import javax.persistence.Persistence;
 
 public class JpaMainItem {
     public static void main(String[] args) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("hello");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction tx = entityManager.getTransaction();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
         tx.begin();
 
+        try {
+            Movie movie = new Movie();
+            movie.setDirector("디렉터");
+            movie.setActor("배우");
+            movie.setName("어벤져스");
+            movie.setPrice(10000);
 
-        tx.commit();
-        entityManager.close();
-        entityManagerFactory.close();;
+            em.persist(movie);
+
+            em.flush();
+            em.clear();
+
+            Movie findMovie = em.find(Movie.class, movie.getId());
+            System.out.println("findMovie = " + findMovie);
+
+            tx.commit();
+        } catch (Exception e){
+            tx.rollback();
+        } finally {
+            em.close();
+        }
+        emf.close();;
     }
 }
